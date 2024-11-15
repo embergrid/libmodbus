@@ -86,10 +86,10 @@ static int _modbus_set_slave(modbus_t *ctx, int slave)
 
     return 0;
 }
+
 int _modbus_rtu_build_request_basis(modbus_t *ctx, int function,
                                            int addr, int nb,
                                            uint8_t *req);
-
 /* Builds a RTU request header */
 int _modbus_rtu_build_request_basis(
     modbus_t *ctx, int function, int addr, int nb, uint8_t *req)
@@ -107,6 +107,7 @@ int _modbus_rtu_build_request_basis(
 
 int _modbus_rtu_build_response_basis(sft_t *sft, uint8_t *rsp);
 
+int _modbus_rtu_build_response_basis(sft_t *sft, uint8_t *rsp);
 /* Builds a RTU response header */
 int _modbus_rtu_build_response_basis(sft_t *sft, uint8_t *rsp)
 {
@@ -124,13 +125,13 @@ uint16_t crc16(uint8_t *buffer, uint16_t buffer_length)
 {
     uint8_t crc_hi = 0xFF; /* high CRC byte initialized */
     uint8_t crc_lo = 0xFF; /* low CRC byte initialized */
-    unsigned int i;        /* will index into CRC lookup */
+    unsigned int i; /* will index into CRC lookup */
 
     /* pass through message buffer */
     while (buffer_length--) {
-        i = crc_lo ^ *buffer++; /* calculate the CRC  */
-        crc_lo = crc_hi ^ table_crc_hi[i];
-        crc_hi = table_crc_lo[i];
+        i = crc_hi ^ *buffer++; /* calculate the CRC  */
+        crc_hi = crc_lo ^ table_crc_hi[i];
+        crc_lo = table_crc_lo[i];
     }
 
     return (crc_hi << 8 | crc_lo);
@@ -143,7 +144,6 @@ int _modbus_rtu_get_response_tid(const uint8_t *req)
     /* No TID */
     return 0;
 }
-
 int _modbus_rtu_send_msg_pre(uint8_t *req, int req_length);
 
 int _modbus_rtu_send_msg_pre(uint8_t *req, int req_length)
