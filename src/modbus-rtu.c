@@ -91,9 +91,8 @@ int _modbus_rtu_build_request_basis(modbus_t *ctx, int function,
                                            int addr, int nb,
                                            uint8_t *req);
 /* Builds a RTU request header */
-int _modbus_rtu_build_request_basis(modbus_t *ctx, int function,
-                                           int addr, int nb,
-                                           uint8_t *req)
+int _modbus_rtu_build_request_basis(
+    modbus_t *ctx, int function, int addr, int nb, uint8_t *req)
 {
     assert(ctx->slave != -1);
     req[0] = ctx->slave;
@@ -106,7 +105,7 @@ int _modbus_rtu_build_request_basis(modbus_t *ctx, int function,
     return _MODBUS_RTU_PRESET_REQ_LENGTH;
 }
 
-/* Builds a RTU response header */
+int _modbus_rtu_build_response_basis(sft_t *sft, uint8_t *rsp);
 
 int _modbus_rtu_build_response_basis(sft_t *sft, uint8_t *rsp);
 /* Builds a RTU response header */
@@ -138,7 +137,9 @@ uint16_t crc16(uint8_t *buffer, uint16_t buffer_length)
     return (crc_hi << 8 | crc_lo);
 }
 
-static int _modbus_rtu_get_response_tid(const uint8_t *req)
+int _modbus_rtu_get_response_tid(const uint8_t *req);
+
+int _modbus_rtu_get_response_tid(const uint8_t *req)
 {
     /* No TID */
     return 0;
@@ -352,19 +353,7 @@ static int _modbus_rtu_pre_check_confirmation(modbus_t *ctx,
     }
 }
 
-
-
-int _modbus_rtu_prepare_response_tid(const uint8_t *req, int *req_length);
-int _modbus_rtu_prepare_response_tid(const uint8_t *req, int *req_length)
-{
-    (*req_length) -= _MODBUS_RTU_CHECKSUM_LENGTH;
-    /* No TID */
-    return 0;
-}
-
-
-int _modbus_rtu_check_integrity(modbus_t *ctx, uint8_t *msg,
-                                       const int msg_length);
+int _modbus_rtu_check_integrity(modbus_t *ctx, uint8_t *msg, const int msg_length);
 
 /* The check_crc16 function shall return 0 if the message is ignored and the
    message length if the CRC is valid. Otherwise it shall return -1 and set
