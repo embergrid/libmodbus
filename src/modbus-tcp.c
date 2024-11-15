@@ -952,7 +952,7 @@ const modbus_backend_t _modbus_rtutcp_backend = {_MODBUS_BACKEND_TYPE_TCP,
                                                  _modbus_set_slave,
                                                  _modbus_rtu_build_request_basis,
                                                  _modbus_rtu_build_response_basis,
-                                                 _modbus_rtu_get_response_tid,
+                                                 _modbus_tcp_get_response_tid,
                                                  _modbus_rtu_send_msg_pre,
                                                  _modbus_tcp_send,
                                                  _modbus_tcp_receive,
@@ -965,6 +965,29 @@ const modbus_backend_t _modbus_rtutcp_backend = {_MODBUS_BACKEND_TYPE_TCP,
                                                  _modbus_tcp_flush,
                                                  _modbus_tcp_select,
                                                  _modbus_tcp_free};
+
+// const modbus_backend_t _modbus_rtu_backend = {
+//     _MODBUS_BACKEND_TYPE_RTU,
+//     _MODBUS_RTU_HEADER_LENGTH,
+//     _MODBUS_RTU_CHECKSUM_LENGTH,
+//     MODBUS_RTU_MAX_ADU_LENGTH,
+//     _modbus_set_slave,
+//     _modbus_rtu_build_request_basis,
+//     _modbus_rtu_build_response_basis,
+//     _modbus_rtu_get_response_tid,
+//     _modbus_rtu_send_msg_pre,
+//     _modbus_rtu_send,
+//     _modbus_rtu_receive,
+//     _modbus_rtu_recv,
+//     _modbus_rtu_check_integrity,
+//     _modbus_rtu_pre_check_confirmation,
+//     _modbus_rtu_connect,
+//     _modbus_rtu_is_connected,
+//     _modbus_rtu_close,
+//     _modbus_rtu_flush,
+//     _modbus_rtu_select,
+//     _modbus_rtu_free
+// };
 
 modbus_t *modbus_new_tcp(const char *ip, int port)
 {
